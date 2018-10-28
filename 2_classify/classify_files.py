@@ -1,6 +1,10 @@
 import os
 import shutil
 
+"""
+将files里面的文件分别归类
+
+"""
 path = './files'
 files = os.listdir(path)
 
