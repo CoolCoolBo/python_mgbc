@@ -16,7 +16,7 @@ def sendMessage(info_list, text):
 			except ResponseError as e:
 				print(e.err_code, e.err_msg)
 		else:
-			print("找不到该用户：　"，each['微信昵称'])
+			print("没有这个用户：", each['微信昵称'])
 		time.sleep(1)
 
 file = open('./MeetingMsg.csv', 'r')
