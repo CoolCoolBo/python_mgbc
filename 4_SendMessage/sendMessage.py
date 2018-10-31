@@ -10,8 +10,13 @@ def sendMessage(info_list, text):
 							   place=each['地址'],
 							   note=each['备注'])
 		friend = bot.friends().search(each['微信昵称']) 
-		if friend != []:
-			friend[0].send(message)
+		if len(friend) == 1:
+			try:
+				friend[0].send(message)
+			except ResponseError as e:
+				print(e.err_code, e.err_msg)
+		else:
+			print("找不到该用户：　"，each['微信昵称'])
 		time.sleep(1)
 
 file = open('./MeetingMsg.csv', 'r')
