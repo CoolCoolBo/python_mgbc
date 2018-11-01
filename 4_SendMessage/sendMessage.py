@@ -1,5 +1,6 @@
 from wxpy import *
 import csv
+import time
 
 def sendMessage(info_list, text):
 	bot = Bot()
