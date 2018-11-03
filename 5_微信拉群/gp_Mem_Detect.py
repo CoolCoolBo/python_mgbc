@@ -1,3 +1,4 @@
+# coding=utf-8
 from wxpy import *
 import time
 
@@ -32,19 +33,24 @@ def sendInMsg(change_members, bot):
         myself.send(msg)
 
 
-bot = Bot()
-group = bot.groups().search("测试群")[0]
-members_before = group.members
-while True:
-    change_members = []
-    time.sleep(10)
-    group = bot.groups().search("测试群")[0]
-    members_now = group.members
-    if len(members_now) < len(members_before):
-        change_members = isOut(members_before, members_now)
-        sendOutMsg(change_members, bot)
-        members_before = members_now
-    elif len(members_now) > len(members_before):
-        change_members = isIn(members_before, members_now)
-        sendInMsg(change_members, bot)
-        members_before = members_now
+def listen(group_name):
+    bot = Bot()
+    group = bot.groups().search(group_name)[0]
+    members_before = group.members
+    while True:
+        change_members = []
+        time.sleep(10)
+        group = bot.groups().search(group_name)[0]
+        members_now = group.members
+        if len(members_now) < len(members_before):
+            change_members = isOut(members_before, members_now)
+            sendOutMsg(change_members, bot)
+            members_before = members_now
+        elif len(members_now) > len(members_before):
+            change_members = isIn(members_before, members_now)
+            sendInMsg(change_members, bot)
+            members_before = members_now
+
+
+group_name = input("输入要监测的群：")
+listen(group_name)
