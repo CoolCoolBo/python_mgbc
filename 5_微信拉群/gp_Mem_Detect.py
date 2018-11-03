@@ -3,14 +3,14 @@ from wxpy import *
 import time
 
 
-def isIn(members_before, members_now):
+def isIn(change_members, members_before, members_now):
     for each in members_now:
         if each not in members_before:
             change_members.append(each.name)
             return change_members
 
 
-def isOut(members_before, members_now):
+def isOut(change_members, members_before, members_now):
     for each in members_before:
         if each not in members_now:
             change_members.append(each.name)
@@ -39,15 +39,15 @@ def listen(group_name):
     members_before = group.members
     while True:
         change_members = []
-        time.sleep(10)
+        time.sleep(30)
         group = bot.groups().search(group_name)[0]
         members_now = group.members
         if len(members_now) < len(members_before):
-            change_members = isOut(members_before, members_now)
+            change_members = isOut(change_members, members_before, members_now)
             sendOutMsg(change_members, bot)
             members_before = members_now
         elif len(members_now) > len(members_before):
-            change_members = isIn(members_before, members_now)
+            change_members = isIn(change_members, members_before, members_now)
             sendInMsg(change_members, bot)
             members_before = members_now
 
