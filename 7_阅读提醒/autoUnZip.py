@@ -1,5 +1,6 @@
 import os 
 import shutil
+import threading
 
 """
 自动扫描压缩包并解压，然后删除压缩包
@@ -18,20 +19,24 @@ class ZipManager:
 					return f
 
 		def un_zip(self, f):
-			path = f.split('.')[0]
-			filePath = self.file_path + '/' + f   
-			target_path = self.file_path + '/' + path
-			# os.mkdir(target_path)
-			shutil.unpack_archive(filePath, target_path)
+			if f:
+				path = f.split('.')[0]
+				filePath = self.file_path + '/' + f   
+				target_path = self.file_path + '/' + path
+				# os.mkdir(target_path)
+				shutil.unpack_archive(filePath, target_path)
 
 		def delete(self, f):
-			filePath = self.file_path + '/' + f   
-			os.remove(filePath)
+			if f:
+				filePath = self.file_path + '/' + f   
+				os.remove(filePath)
 
 		def move(self, f):
-			# os.mkdir('/home/bo/Downloads/packages')
-			file = '/home/bo/Downloads/' + f
-			shutil.move(file, '/home/bo/Downloads/packages')
+			if not os.path.exists('/home/bo/Downloads/packages'):
+				os.mkdir('/home/bo/Downloads/packages')
+			if f:
+				file = '/home/bo/Downloads/' + f
+				shutil.move(file, '/home/bo/Downloads/packages')
 
 
 		def run(self):
@@ -48,15 +53,11 @@ class ZipManager:
 
 
 
-
-# while True:
-# 	f = scanf()
-# 	if f:
-# 		un_zip(f)
-# 		delete(f)
 manager1 = ZipManager('/home/bo/Desktop')
 manager2 = ZipManager('/home/bo/Downloads')
 print(manager1)
 print(manager2)
-manager1.run()
-manager2.run()
+print('正在监测压缩文件...')
+while True:
+	manager1.run()
+	manager2.run()
