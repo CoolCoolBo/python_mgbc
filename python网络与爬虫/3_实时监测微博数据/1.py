@@ -6,7 +6,7 @@ def start_chrome():
     driver = webdriver.Chrome(executable_path='./chromedriver')
     driver.start_client()
     return driver
-# 启动同一目录下的浏览器
+# 启动同一目录下的专用浏览器
 
 
 def find_info():
