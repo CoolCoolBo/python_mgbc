@@ -3,7 +3,7 @@ import os
 
 
 window = Tk()
-window.title('显示隐藏文件')
+window.title('')
 window.geometry('600x600')
 label = Label(text='隐藏的文件', font=('Hack', 18, 'bold'))
 label.pack()
